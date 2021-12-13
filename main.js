@@ -47,7 +47,7 @@ function displayError(message){
     // $('#collapser').addClass("d-none");
     $('#alert').removeClass("alert-success");
     $("#alert").addClass("alert-danger");
-    $("#alertText").text(message.toString().toLowerCase());
+    $("#alertText").text(message);
     $('#player').addClass("d-none");
     $("#collapser").fadeIn();
 }
@@ -74,7 +74,9 @@ function requestCountermelody(){
 
 	fetch(apiAddress+"countermelody"+querystring, { method: 'GET', mode: 'cors' }).then(function(response){
 		if(response.status !== 200){
-            displayError(response.message);
+            response.json().then(function(data){
+                displayError(data.message.toLowerCase());
+            });
 			return;
 		}
 		response.json().then(function(data){
@@ -88,7 +90,6 @@ function requestCountermelody(){
 		});
 	}).catch(function(error){
         displayError(error);
-        return;
 	});
 }
 
