@@ -1,22 +1,31 @@
 const apiAddress = "https://bruhfeefee.pythonanywhere.com/api/"
 
 data = {}
+manyTracks = false;
+invalid = false;
 
 window.onload = function(){
     var source = document.getElementById('file');
     MidiParser.parse(source, function(obj){
-        console.log(obj);
         tracks = obj.tracks;
         if (tracks != 1){
-            displayError("Midi file has too many tracks.");
+            if(tracks == null){
+                invalid = true;
+                manyTracks= false;
+            }else{
+                manyTracks=true;
+                invalid=false;
+            }
             return;
+        }else{
+            manyTracks=false;
+            invalid=false;
         }
         events = obj.track[0].event; 
         time = 0
         notes = []
         for(let i = 0; i<events.length;i++){
             e = events[i];
-            console.log(e)
             type = e.type;
             if (type == 9 && e.data[1] > 0){
                 note = {
@@ -30,18 +39,17 @@ window.onload = function(){
         }
 
         data['notes'] = notes;
-
-        console.log(data);
     });
 };
 
 function displayError(message){
     console.log(message);
+    // $('#collapser').addClass("d-none");
     $('#alert').removeClass("alert-success");
     $("#alert").addClass("alert-danger");
-    $("#alertText").text(message);
+    $("#alertText").text(message.toString().toLowerCase());
     $('#player').addClass("d-none");
-    $("#collapser").collapse("show");
+    $("#collapser").fadeIn();
 }
 
 function requestCountermelody(){
@@ -76,7 +84,7 @@ function requestCountermelody(){
             $("#alert").addClass("alert-success");
             $("#alertText").text("Countermelody generated!");
             $('#player').removeClass("d-none");
-            $("#collapser").collapse("show");
+            $("#collapser").fadeIn();
 		});
 	}).catch(function(error){
         displayError(error);
@@ -89,32 +97,25 @@ function tryUnlockSubmit(){
     tempo = $("#tempo").val();
     file = $("#file").val();
     species =  $("#species").val();
-    console.log(file);
-    console.log(key)
-    console.log(species)
     if (!tempo){
-        console.log("tempo");
         $("#submit").prop("disabled",true);
 
         return false;
     }
 
     if (key==-1){
-        console.log("key");
         $("#submit").prop("disabled",true);
 
         return false;
     }
 
     if(file==''){
-        console.log("file");
         $("#submit").prop("disabled",true);
 
         return false;
     }
 
     if (species==-1){
-        console.log("species");
         $("#submit").prop("disabled",true);
 
         return false;
@@ -127,18 +128,27 @@ function submitFile(){
     requestCountermelody();
 }
 
-function init(){
-    
-}
-
-$(document).ready(init);
-
 $("#key").change(tryUnlockSubmit);
 $("#tempo").change(tryUnlockSubmit);
-$("#file").change(tryUnlockSubmit);
+$("#file").change(function(){
+    var f = $('#file')[0].files[0];
+    if (f){
+        console.log(f);
+        $("#filelabel").text(f.name);
+    }
+
+    tryUnlockSubmit();
+});
 $("#species").change(tryUnlockSubmit);
+
 
 $("#submit").click(function(event){
     event.preventDefault();
-    requestCountermelody();
+    if (manyTracks){
+        displayError("midi file has too many tracks.");
+    }else if (invalid){
+        displayError('a valid midi file was not uploaded.');
+    }else{
+        requestCountermelody();
+    }
 });

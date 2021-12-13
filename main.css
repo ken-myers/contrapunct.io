@@ -1,0 +1,104 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"],input[type="number"]:active,input[type="number"]:focus {
+    -moz-appearance: textfield;
+    border-bottom: solid;
+    border-width: 2px;
+}  
+
+body{
+    font-family: 'Source Code Pro', monospace;
+    /* background-color: #C0B9DD; */
+}
+
+#headers{
+    text-align: center;
+}
+
+#headers > *{
+    margin:0;
+}
+
+.mainheader {
+    font-size: 2.8em;
+}
+
+#maintainer{
+    margin-left: auto;
+    margin-right:auto;
+    margin-top:5em;
+    text-align: center;
+
+}
+
+.form-element{
+    display: inline;
+}
+
+/* .form-element > label{
+    display:inline-block;
+} */
+
+.form-element > *{
+    padding:0;
+    margin:0;
+    vertical-align: middle;
+    position: relative;
+}
+/* 
+.form-element > input{
+    top: 1px;
+} */
+
+#file{
+    display: none;
+}
+
+#filelabel:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+hr{
+    width:14em;
+    margin-top: 1em;
+}
+
+#infoRow{
+    margin-top: 1em;
+    margin-bottom:1em;
+}
+
+input, select, label, #submit{
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.83em
+}
+select,select:focus,input,input:focus{
+    border: none;
+    outline: none;
+}
+
+#submit{
+    background-color: white;
+    border: none;
+}
+
+#submit:enabled:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.d-none{
+    display: none;
+}
+
+.alert-danger{
+    color: #bb0000;
+}
+
+.alert-success{
+    color:green;
+}
