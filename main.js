@@ -5,46 +5,104 @@ manyTracks = false;
 invalid = false;
 
 window.onload = function(){
-    var source = document.getElementById('file');
-    MidiParser.parse(source, function(obj){
-        tracks = obj.tracks;
-        if (tracks != 1){
-            if(tracks == null){
-                invalid = true;
-                manyTracks= false;
-            }else{
-                manyTracks=true;
-                invalid=false;
-            }
-            return;
-        }else{
-            manyTracks=false;
-            invalid=false;
-        }
-        events = obj.track[0].event; 
-        time = 0
-        notes = []
-        for(let i = 0; i<events.length;i++){
-            e = events[i];
-            type = e.type;
-            if (type == 9 && e.data[1] > 0){
-                note = {
-                   'midi':e.data[0],
-                   'time':time
-                }
-                notes.push(note);
-            }
 
-            time+=e.deltaTime;
-        }
+    styleDemoPlayer();
+    initParser();
 
-        data['notes'] = notes;
-    });
+    $("#closebutton").click(closeHelp);
+    $("#helpscreen").click(closeHelp);
+    $("#help-text-container").click(e=>{e.stopPropagation();});
+    $("#helpbutton").click(openHelp);
+    $("#demolink").click(startDemo);
 };
 
+function startDemo(){
+    
+    fetch('./pachelbel.mid')
+        .then(res=>res.blob())
+        .then(blob=>{
+            var dt = new DataTransfer();
+            var demofile = new File([blob], "pachelbel.mid");
+            dt.items.add(demofile);
+            document.querySelector("#file").files = dt.files;
+
+            var reader = new FileReader();
+            reader.readAsDataURL(demofile);
+            reader.onload = function(){
+                base64data = reader.result;
+                base64data = base64data.substr(base64data.indexOf(',')+1);
+                parseMidi(MidiParser.parse(base64data));
+            };
+
+        }).then(()=>{
+            $("#filelabel").text("pachelbel.mid");
+            $("#key").val(2);
+            $("#minor").prop('checked', false);
+            $("#species").val(3);
+            $("#tempo").val(120);
+            
+            tryUnlockSubmit();
+            closeHelp();
+        })
+}
+
+function openHelp(){
+    $("#helpscreen").removeClass("d-none");
+}
+
+function initParser(){
+    var source = document.getElementById('file');
+    MidiParser.parse(source, parseMidi);
+}
+
+function parseMidi(obj){
+
+    tracks = obj.tracks;
+    if (tracks != 1){
+        if(tracks == null){
+            invalid = true;
+            manyTracks= false;
+        }else{
+            manyTracks=true;
+            invalid=false;
+        }
+        return;
+    }else{
+        manyTracks=false;
+        invalid=false;
+    }
+    events = obj.track[0].event; 
+    time = 0
+    notes = []
+    for(let i = 0; i<events.length;i++){
+        e = events[i];
+        type = e.type;
+        if (type == 9 && e.data[1] > 0){
+            note = {
+               'midi':e.data[0],
+               'time':time
+            }
+            notes.push(note);
+        }
+
+        time+=e.deltaTime;
+    }
+
+    data['notes'] = notes;
+}
+
+function closeHelp(){
+    $("#helpscreen").addClass("d-none");
+}
+
+function styleDemoPlayer(){
+    var style = document.createElement("link");
+    $(style).attr("rel", "stylesheet");
+    $(style).attr("href", "demoplayer.css");
+    $("#demoplayer")[0].shadowRoot.appendChild(style);
+}
+
 function displayError(message){
-    console.log(message);
-    // $('#collapser').addClass("d-none");
     $('#alert').removeClass("alert-success");
     $("#alert").addClass("alert-danger");
     $("#alertText").text(message);
@@ -134,7 +192,6 @@ $("#tempo").change(tryUnlockSubmit);
 $("#file").change(function(){
     var f = $('#file')[0].files[0];
     if (f){
-        console.log(f);
         $("#filelabel").text(f.name);
     }
 

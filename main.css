@@ -9,9 +9,91 @@ input[type="number"],input[type="number"]:active,input[type="number"]:focus {
     border-width: 2px;
 }  
 
+html{
+    height:100%;
+}
+
+#closebutton{
+    position: absolute;
+    right:30px;
+    top:30px;
+}
+
+/* #closebutton:hover{
+    cursor: pointer;
+    text-decoration: underline;
+} */
+
+#demoplayer-line{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    vertical-align: middle;
+    flex-wrap: wrap;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+}
+
+#demoplayer-line > div > p{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#demolink{
+    color: black;
+    margin: auto;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* #demolink:hover{
+    text-decoration: underline;
+    cursor: pointer;
+} */
+
+#help-text-container{
+    position:relative;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    text-align: justify;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 40px;
+    margin:50px;
+}
+
+#helpscreen{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    width:100%;
+    height:100vh;
+    position: fixed;
+    top:0;
+    left:0;
+    justify-content: center;
+}
+
+#headers{
+    position: absolute;
+    top:0;
+    width:100%;
+}
+
 body{
     font-family: 'Source Code Pro', monospace;
-    /* background-color: #C0B9DD; */
+    height:100%;
+    margin:0;
+}
+
+#flexwrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    height:100vh;
+
 }
 
 #headers{
@@ -27,20 +109,12 @@ body{
 }
 
 #maintainer{
-    margin-left: auto;
-    margin-right:auto;
-    margin-top:5em;
     text-align: center;
-
 }
 
 .form-element{
     display: inline;
 }
-
-/* .form-element > label{
-    display:inline-block;
-} */
 
 .form-element > *{
     padding:0;
@@ -48,29 +122,23 @@ body{
     vertical-align: middle;
     position: relative;
 }
-/* 
-.form-element > input{
-    top: 1px;
-} */
 
 #file{
     display: none;
 }
 
-#filelabel:hover{
+/* #filelabel:hover{
     text-decoration: underline;
     cursor: pointer;
-}
+} */
 
-hr{
-    width:14em;
-    margin-top: 1em;
-}
+
 
 #infoRow{
     margin-top: 1em;
     margin-bottom:1em;
 }
+
 
 input, select, label, #submit{
     font-family: 'Source Code Pro', monospace;
@@ -86,12 +154,19 @@ select,select:focus,input,input:focus{
     border: none;
 }
 
-#submit:enabled:hover{
+
+
+a, .textbutton{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover, .textbutton:hover, #submit:enabled:hover{
     text-decoration: underline;
     cursor: pointer;
 }
 
-.d-none{
+.d-none, #helpscreen.d-none{
     display: none;
 }
 
