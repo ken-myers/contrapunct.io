@@ -1,0 +1,19 @@
+.controls{
+    padding-top: 0.16em;
+    /* height: 10px; */
+    background: none;
+    vertical-align: middle;
+}
+
+.controls > *{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.controls > button.play{
+    margin-left:0;
+}
+
+.controls > input.seek-bar{
+    margin-right:0;
+}

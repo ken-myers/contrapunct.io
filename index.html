@@ -12,17 +12,38 @@
 </head>
 
 <body>
+    <div id="helpscreen" class = "d-none">
+        <div id = "help-text-container">
+        <a id = "closebutton">X</a>
+        <p>welcome to contrapunct.io!</p>
+            <p>to begin composing a countermelody, upload a midi file of your cantus firmus. as per the conventions of species counterpoint, the cantus firmus must diatonic to a major or minor scale (no accidentals), and must contain no rhythmic variation (e.g. only whole notes).</p>
+            <p>next, input the desired output tempo, the key your cantus firmus is written in and if it's minor or not, the desired species of the countermelody, and click submit—your countermelody will generate shortly.</p>
+            
+            <p>just want a quick demo? click below to compose a third species countermelody for pachelbel's canon.
+            </p>
+            <div id="demoplayer-line">
+                <div><p>(the canon sounds like this pre-countermelody: </p></div>
+                <div><midi-player id="demoplayer" sound-font="https://storage.googleapis.com/magentadata/js/soundfonts/salamander" src = "./pachelbel.mid"></midi-player></div>
+                <div><p>)</p></div>
+            </div>
+            <a id="demolink">click here for a demo</a>
+        </div>
+    </div>
+    <div id = 'headerwrapper'>
     <div id="headers">
         <h1 class="mainheader">
             contrapunct.io
         </h1>
         <h4 class="subheader">midi countermelody generator</h4>
+        <hr style="width:14em;margin:auto;margin-top:1em;">
     </div>
-    <hr>
+    </div>
+    <div id="flexwrapper">
+    <div id="mainwrapper">
     <div id="maintainer">
         <form>
             <div>
-                <label id="filelabel" for="file">upload a midi file</label>
+                <label id="filelabel" class = "textbutton" for="file">upload a midi file</label>
                 <input id="file" type="file">
             </div>
             <div id="infoRow">
@@ -62,6 +83,11 @@
                 </midi-player>
             </div>
         </form>
+        <hr style = "width:8em;margin-top:2.75em;">
+        <a id = "helpbutton">help/demo</a>
+    </div>
+    </div>
+    </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
