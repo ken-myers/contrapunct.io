@@ -31,20 +31,20 @@ function startDemo(){
             reader.onload = function(){
                 base64data = reader.result;
                 base64data = base64data.substr(base64data.indexOf(',')+1);
+                console.log("calling parse");
                 parseMidi(MidiParser.parse(base64data));
-            };
 
-        }).then(()=>{
-            $("#filelabel").text("pachelbel.mid");
-            $("#key").val(2);
-            $("#minor").prop('checked', false);
-            $("#species").val(3);
-            $("#tempo").val(120);
-            
-            tryUnlockSubmit();
-            requestCountermelody();
-            closeHelp();
-        })
+                $("#filelabel").text("pachelbel.mid");
+                $("#key").val(2);
+                $("#minor").prop('checked', false);
+                $("#species").val(3);
+                $("#tempo").val(120);
+                
+                tryUnlockSubmit();
+                requestCountermelody();
+                closeHelp();
+            };
+        });
 }
 
 function openHelp(){
@@ -57,6 +57,8 @@ function initParser(){
 }
 
 function parseMidi(obj){
+
+    console.log("parsing")
 
     tracks = obj.tracks;
     if (tracks != 1){
@@ -90,6 +92,8 @@ function parseMidi(obj){
     }
 
     data['notes'] = notes;
+
+    console.log("parsed!")
 }
 
 function closeHelp(){
@@ -112,6 +116,8 @@ function displayError(message){
 }
 
 function requestCountermelody(){
+
+    console.log("requesting")
 
     queryData = {
         'minor':    minor =  $("#minor").prop('checked') ? 1 : 0,
@@ -150,6 +156,8 @@ function requestCountermelody(){
 	}).catch(function(error){
         displayError(error);
 	});
+
+    console.log("requested!")
 }
 
 function tryUnlockSubmit(){
