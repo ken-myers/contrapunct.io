@@ -42,6 +42,7 @@ function startDemo(){
             $("#tempo").val(120);
             
             tryUnlockSubmit();
+            requestCountermelody();
             closeHelp();
         })
 }
