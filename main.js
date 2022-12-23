@@ -1,4 +1,4 @@
-const apiAddress = "https://bruhfeefee.pythonanywhere.com/api/"
+const apiAddress = "./api/"
 
 data = {}
 manyTracks = false;
