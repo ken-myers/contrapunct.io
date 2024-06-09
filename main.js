@@ -1,4 +1,4 @@
-const apiAddress = "./api/"
+const apiAddress = "https://api.kenmyers.io/contrapunct.io/"
 
 data = {}
 manyTracks = false;
